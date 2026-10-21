@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>麦麦日报 · 2026-10-21</title>
+<style>
+  :root{
+    --red:#DA291C; --red-dark:#A61E14; --gold:#FFC72C; --gold-dark:#E8A800;
+    --ink:#2B1A12; --paper:#FFF9F0; --card:#FFFFFF; --muted:#8C7A6B;
+    --green:#1F9D55; --ok-bg:#E8F7EE; --warn:#C0392B; --warn-bg:#FDECEA;
+    --blue:#2563EB; --blue-bg:#EAF1FE;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(255,199,44,.25), transparent 60%),
+      radial-gradient(900px 400px at -10% 20%, rgba(218,41,28,.10), transparent 55%),
+      var(--paper);
+    color:var(--ink); line-height:1.6; padding:28px 16px 60px;
+  }
+  .wrap{max-width:880px;margin:0 auto}
+
+  /* ---------- 封面 ---------- */
+  .cover{
+    position:relative; overflow:hidden; border-radius:24px;
+    background:linear-gradient(135deg,var(--red) 0%, var(--red-dark) 60%, #7E150D 100%);
+    color:#fff; padding:38px 34px 30px; box-shadow:0 18px 40px -18px rgba(166,30,20,.55);
+  }
+  .cover::before{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--gold), var(--gold-dark));opacity:.9}
+  .cover::after{content:"";position:absolute;right:-20px;top:120px;width:90px;height:90px;border-radius:50%;
+    border:10px solid rgba(255,255,255,.18)}
+  .kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,.22);
+    padding:6px 14px;border-radius:999px;font-size:13px;letter-spacing:2px}
+  .kicker .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+  .cover h1{font-size:44px;font-weight:900;letter-spacing:2px;margin:16px 0 4px;
+    text-shadow:0 3px 0 rgba(0,0,0,.18)}
+  .cover h1 span{color:var(--gold)}
+  .cover .sub{font-size:15px;opacity:.92}
+  .cover .stats{display:flex;gap:14px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:2}
+  .stat{background:rgba(255,255,255,.13);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.22);
+    border-radius:16px;padding:12px 18px;min-width:130px}
+  .stat b{display:block;font-size:26px;font-weight:900;color:var(--gold)}
+  .stat small{font-size:12px;opacity:.85}
+
+  /* ---------- 通用区块 ---------- */
+  section{margin-top:34px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .sec-head .num{width:34px;height:34px;border-radius:10px;background:var(--red);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:17px;
+    box-shadow:0 6px 14px -6px rgba(218,41,28,.6)}
+  .sec-head h2{font-size:22px;font-weight:900}
+  .sec-head .tag{margin-left:auto;font-size:12px;color:var(--muted);background:#fff;
+    border:1px solid #F0E2CE;border-radius:999px;padding:4px 12px}
+
+  /* ---------- 票券式优惠券 ---------- */
+  .coupons{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+  .ticket{position:relative;border-radius:18px;background:var(--card);display:flex;overflow:hidden;
+    box-shadow:0 12px 26px -14px rgba(43,26,18,.35);transition:transform .15s}
+  .ticket:hover{transform:translateY(-3px)}
+  .ticket .left{width:96px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#fff;padding:20px 8px;text-align:center;
+    background:linear-gradient(160deg,var(--red),var(--red-dark))}
+  .ticket.free .left{background:linear-gradient(160deg,#E8850C,#C96A00)}
+  .ticket .left .big{font-size:26px;font-weight:900;line-height:1.1}
+  .ticket .left .big small{font-size:14px}
+  .ticket .left .lbl{font-size:11px;opacity:.9;margin-top:4px}
+  .ticket .left::after{content:"";position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+    width:14px;height:14px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 1px #eee}
+  .ticket .right{flex:1;padding:14px 16px 14px 22px;position:relative}
+  .ticket .right::before{content:"";position:absolute;left:88px;top:10px;bottom:10px;
+    border-left:2px dashed #F0D9C0}
+  .ticket h3{font-size:16px;font-weight:800}
+  .ticket .meta{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-top:8px}
+  .badge.danger{background:var(--warn-bg);color:var(--warn)}
+  .badge.ok{background:var(--ok-bg);color:var(--green)}
+  .alert-line{margin-top:14px;background:linear-gradient(90deg,#FFF3CD,#FFE9E9);border:1px solid #F5D98F;
+    border-radius:14px;padding:12px 16px;font-size:14px;font-weight:600}
+  .alert-line b{color:var(--warn)}
+
+  /* ---------- 活动力度排行 ---------- */
+  .rank{background:var(--card);border-radius:18px;padding:20px 22px;box-shadow:0 10px 24px -16px rgba(43,26,18,.3)}
+  .rank-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px dashed #F0E2CE}
+  .rank-row:last-child{border-bottom:none}
+  .rank-row .pos{width:26px;height:26px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:13px;background:#F6EBD9;color:var(--gold-dark)}
+  .rank-row:nth-child(1) .pos{background:var(--gold);color:#7A5200}
+  .rank-row:nth-child(2) .pos{background:#E9E4DC;color:#7A6A50}
+  .rank-row:nth-child(3) .pos{background:#F3D3B8;color:#8A4B1F}
+  .rank-row .name{flex:0 0 190px;font-weight:700;font-size:14px}
+  .rank-row .bar{flex:1;height:12px;border-radius:999px;background:#F4EBDD;overflow:hidden}
+  .rank-row .bar i{display:block;height:100%;border-radius:999px;
+    background:linear-gradient(90deg,var(--gold),var(--red))}
+  .rank-row .val{flex:0 0 108px;text-align:right;font-weight:900;color:var(--red);font-size:14px}
+  .rank-row .val small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+
+  /* ---------- 活动卡片网格 ---------- */
+  .acts{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px}
+  .act{background:var(--card);border-radius:16px;padding:16px 18px;position:relative;overflow:hidden;
+    box-shadow:0 8px 20px -14px rgba(43,26,18,.35);border-top:4px solid var(--gold)}
+  .act.hot{border-top-color:var(--red)}
+  .act .emoji{font-size:26px}
+  .act h3{font-size:15px;font-weight:800;margin:6px 0 4px}
+  .act .price{font-size:20px;font-weight:900;color:var(--red)}
+  .act .price small{font-size:12px;color:var(--muted);font-weight:500}
+  .act p{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .pill{position:absolute;top:12px;right:12px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px}
+  .pill.live{background:var(--ok-bg);color:var(--green)}
+  .pill.soon{background:var(--blue-bg);color:var(--blue)}
+
+  /* ---------- 口碑 ---------- */
+  .voices{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:14px}
+  .voice{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 8px 20px -14px rgba(43,26,18,.35)}
+  .voice .head{display:flex;align-items:center;gap:10px}
+  .voice .head .emoji{font-size:24px}
+  .voice .head h3{font-size:15.5px;font-weight:800;flex:1}
+  .score{font-size:13px;font-weight:900;padding:3px 10px;border-radius:999px}
+  .score.good{background:var(--ok-bg);color:var(--green)}
+  .score.best{background:linear-gradient(90deg,var(--gold),#FFE28A);color:#7A5200}
+  .score.bad{background:var(--warn-bg);color:var(--warn)}
+  .score.na{background:#F1ECE4;color:var(--muted)}
+  .meter{display:flex;gap:3px;margin:10px 0 8px}
+  .meter i{flex:1;height:8px;border-radius:4px;background:#F1E8DA}
+  .meter i.on-g{background:var(--green)} .meter i.on-y{background:var(--gold)} .meter i.on-r{background:var(--red)}
+  .voice p{font-size:13px;color:#5C4B3C}
+  .voice .tip{margin-top:10px;font-size:12.5px;font-weight:700;border-radius:10px;padding:8px 12px}
+  .voice .tip.buy{background:var(--ok-bg);color:var(--green)}
+  .voice .tip.avoid{background:var(--warn-bg);color:var(--warn)}
+  .voice .tip.warn{background:#FFF6E0;color:#9A6B00}
+
+  /* ---------- 抽奖决策 ---------- */
+  .lotto{background:linear-gradient(135deg,#241A12,#3A2418);border-radius:20px;color:#F5E9D6;
+    padding:26px 26px 22px;box-shadow:0 16px 36px -18px rgba(36,26,18,.6)}
+  .lotto h2{font-size:20px;font-weight:900;color:var(--gold);display:flex;align-items:center;gap:10px}
+  .lotto-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+  .lotto-cell{background:rgba(255,255,255,.07);border:1px solid rgba(255,199,44,.25);border-radius:14px;padding:12px 14px}
+  .lotto-cell b{display:block;font-size:20px;color:var(--gold);font-weight:900}
+  .lotto-cell small{font-size:12px;opacity:.8}
+  .prize-tags{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+  .ptag{font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:999px}
+  .ptag.win{background:rgba(31,157,85,.18);color:#7BE3A5;border:1px solid rgba(31,157,85,.4)}
+  .ptag.lose{background:rgba(218,41,28,.16);color:#FF9C93;border:1px solid rgba(218,41,28,.4)}
+  .lotto .verdict{background:rgba(255,199,44,.12);border-left:4px solid var(--gold);border-radius:10px;
+    padding:12px 16px;font-size:14px}
+  .lotto .verdict b{color:var(--gold)}
+
+  /* ---------- 时间轴 ---------- */
+  .timeline{position:relative;padding-left:26px}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;border-radius:3px;
+    background:linear-gradient(var(--gold),var(--red))}
+  .tl-item{position:relative;padding:0 0 16px 12px}
+  .tl-item::before{content:"";position:absolute;left:-24px;top:7px;width:11px;height:11px;border-radius:50%;
+    background:#fff;border:3px solid var(--red)}
+  .tl-item .date{font-size:12px;font-weight:900;color:var(--red);letter-spacing:1px}
+  .tl-item .what{font-size:14.5px;font-weight:700}
+  .tl-item .what small{color:var(--muted);font-weight:500}
+  .tl-cols{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px}
+
+  footer{margin-top:40px;text-align:center;font-size:12px;color:var(--muted)}
+  footer .src{display:inline-flex;gap:8px;align-items:center;background:#fff;border:1px solid #F0E2CE;
+    border-radius:999px;padding:6px 16px}
+
+  @media (max-width:640px){
+    .cover h1{font-size:32px}
+    .rank-row .name{flex-basis:120px;font-size:13px}
+    .rank-row .val{flex-basis:86px}
+    .tl-cols{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 封面 -->
+  <header class="cover">
+    <span class="kicker"><span class="dot"></span>McDSAVER · 麦麦省钱助手</span>
+    <h1>麦麦<span>日报</span></h1>
+    <div class="sub">2026年10月21日 星期三 · 数据截取 17:20 · 来源：麦当劳官方 MCP</div>
+    <div class="stats">
+      <div class="stat"><b>3 张</b><small>当前可用券</small></div>
+      <div class="stat"><b>130.4</b><small>可用积分</small></div>
+      <div class="stat"><b>5 次</b><small>可抽奖次数</small></div>
+      <div class="stat"><b>¥20+</b><small>本周可省钱</small></div>
+    </div>
+  </header>
+
+  <!-- 券包 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">1</span><h2>你的券包</h2>
+      <span class="tag">一键领券已执行 ✅ 新增免费脆薯饼</span>
+    </div>
+    <div class="coupons">
+      <div class="ticket">
+        <div class="left"><div class="big"><small>¥</small>11.9</div><div class="lbl">券面价</div></div>
+        <div class="right">
+          <h3>麦辣鸡腿堡</h3>
+          <div class="meta">单点价 ¥22.5 · 到店 + 外送</div>
+          <span class="badge danger">⏰ 10/23 周五 23:59 过期 · 仅剩 2.3 天</span>
+        </div>
+      </div>
+      <div class="ticket">
+        <div class="left"><div class="big"><small>¥</small>19.9</div><div class="lbl">券面价</div></div>
+        <div class="right">
+          <h3>王牌炸鸡任选 2</h3>
+          <div class="meta">到店 + 外送 · 周一至五可用</div>
+          <span class="badge danger">⏰ 10/23 周五 23:59 过期 · 仅剩 2.3 天</span>
+        </div>
+      </div>
+      <div class="ticket free">
+        <div class="left"><div class="big">FREE</div><div class="lbl">免费</div></div>
+        <div class="right">
+          <h3>脆薯饼</h3>
+          <div class="meta">今日刚领 · 麦麦省渠道</div>
+          <span class="badge ok">✅ 已领取 · 有效期以券面为准</span>
+        </div>
+      </div>
+    </div>
+    <div class="alert-line">⚠️ 两张主力券限<b>周一至周五</b>使用，10/23 是周五 —— <b>实际只剩周五一天窗口</b>，周末作废。两张用掉合计省 ¥20+。</div>
+  </section>
+
+  <!-- 活动力度排行 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">2</span><h2>优惠力度排行榜</h2>
+      <span class="tag">按绝对省钱金额</span>
+    </div>
+    <div class="rank">
+      <div class="rank-row"><span class="pos">1</span><span class="name">学生麦金学期卡</span>
+        <span class="bar"><i style="width:100%"></i></span>
+        <span class="val">0.33 元/天<small>49元 / 150天 + 四件套5折 + 免配×2</small></span></div>
+      <div class="rank-row"><span class="pos">2</span><span class="name">鸡薯双全盒</span>
+        <span class="bar"><i style="width:58%"></i></span>
+        <span class="val">15.9 元起<small>蘸酱炸鸡 11.9 元起</small></span></div>
+      <div class="rank-row"><span class="pos">3</span><span class="name">早餐厚松饼堡</span>
+        <span class="bar"><i style="width:55%"></i></span>
+        <span class="val">15 元起<small>3件套 · 早餐卡 6 折</small></span></div>
+      <div class="rank-row"><span class="pos">4</span><span class="name">龙焰鸡腿堡三件套</span>
+        <span class="bar"><i style="width:38%"></i></span>
+        <span class="val">26.9 元起<small>升级芝士棒版 29.9（不推荐）</small></span></div>
+      <div class="rank-row"><span class="pos">5</span><span class="name">麦咖啡浓浓黑巧</span>
+        <span class="bar"><i style="width:28%"></i></span>
+        <span class="val">13.9 元<small>元气早餐 14.9 元起</small></span></div>
+    </div>
+
+    <div class="acts" style="margin-top:16px">
+      <div class="act hot"><span class="pill live">进行中</span>
+        <div class="emoji">🔥</div><h3>GD联名 · 龙焰鸡腿堡</h3>
+        <div class="price">26.9 <small>元起</small></div>
+        <p>三件套进行中 · 四件套 10/28 上</p></div>
+      <div class="act"><span class="pill live">进行中</span>
+        <div class="emoji">🫐</div><h3>蓝莓爆爆珠麦旋风</h3>
+        <div class="price">16 <small>元</small></div>
+        <p>口碑最高 · 当前最值得尝</p></div>
+      <div class="act"><span class="pill live">进行中</span>
+        <div class="emoji">🌶️</div><h3>韩式蘸酱 · 双全盒</h3>
+        <div class="price">15.9 <small>元起</small></div>
+        <p>两款新蘸酱 · 取餐记得检查漏放</p></div>
+      <div class="act"><span class="pill soon">10/23 上</span>
+        <div class="emoji">🎓</div><h3>学生麦金学期卡</h3>
+        <div class="price">49 <small>元/150天</small></div>
+        <p>四件套5折 · 早餐6折 · 送多邻国月卡</p></div>
+      <div class="act"><span class="pill live">进行中</span>
+        <div class="emoji">🎖️</div><h3>PEACEMINUSONE 周边</h3>
+        <div class="price">+39.9 <small>元得徽章/棒球帽</small></div>
+        <p>任意餐品消费加价购</p></div>
+      <div class="act"><span class="pill live">进行中</span>
+        <div class="emoji">🎪</div><h3>过家家派对 · 亲子</h3>
+        <div class="price">到店体验</div>
+        <p>职业服可带走 + DIY 手工 · 读书会 90 分钟</p></div>
+    </div>
+  </section>
+
+  <!-- 口碑 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">3</span><h2>今天吃什么：口碑雷达</h2>
+      <span class="tag">MCP 无评价数据 · 以下来自公开测评</span>
+    </div>
+    <div class="voices">
+      <div class="voice">
+        <div class="head"><span class="emoji">🫐</span><h3>蓝莓爆爆珠麦旋风</h3><span class="score best">★ 口碑最高</span></div>
+        <div class="meter"><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i></i></div>
+        <p>"近期麦旋风最好吃的味道"，偏酸不甜，爆爆珠咬开爆蓝莓果汁。</p>
+        <div class="tip buy">👍 闭眼冲 · 当前最值得尝的新品</div>
+      </div>
+      <div class="voice">
+        <div class="head"><span class="emoji">🔥</span><h3>龙焰鸡腿堡（基础款）</h3><span class="score good">7 / 10</span></div>
+        <div class="meter"><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i></i><i></i><i></i></div>
+        <p>韩式龙焰酱一致好评，甜辣带青梅酸感，"像韩国街头炒年糕"。</p>
+        <div class="tip buy">💡 省钱技巧：薯条换玉米杯，降到约 ¥25 更清爽</div>
+      </div>
+      <div class="voice">
+        <div class="head"><span class="emoji">🧀</span><h3>芝士棒升级款</h3><span class="score bad">差评集中</span></div>
+        <div class="meter"><i class="on-r"></i><i class="on-r"></i><i class="on-r"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p>"不拉丝、中空、没奶香，像油乎乎的炸糕"，加 3 元公认不值。</p>
+        <div class="tip avoid">🚫 点基础款，别加 3 元升级</div>
+      </div>
+      <div class="voice">
+        <div class="head"><span class="emoji">🌶️</span><h3>两款韩式新蘸酱</h3><span class="score good">评价正面</span></div>
+        <div class="meter"><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-g"></i><i class="on-y"></i><i></i><i></i></div>
+        <p>辣椒黄油酱辣度可忽略；烟熏芝士酱奶香带孜然，评价正面。</p>
+        <div class="tip warn">⚠️ 打包易漏放酱，取餐务必检查</div>
+      </div>
+      <div class="voice">
+        <div class="head"><span class="emoji">🥞</span><h3>心形薯饼</h3><span class="score na">颜值＞口感</span></div>
+        <div class="meter"><i class="on-y"></i><i class="on-y"></i><i class="on-y"></i><i class="on-y"></i><i class="on-y"></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p>好看，但"比早餐薯饼干巴"，主要靠蘸酱救场。</p>
+        <div class="tip warn">📷 拍照可点，口感一般</div>
+      </div>
+      <div class="voice">
+        <div class="head"><span class="emoji">🤷</span><h3>松饼堡 / 黑巧 / 圆筒 / 周边</h3><span class="score na">数据不足</span></div>
+        <div class="meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p>公开测评极少，无法给出可靠口碑判断，不硬推。</p>
+        <div class="tip warn">按价格或颜值自行决定</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 抽奖 -->
+  <section>
+    <div class="lotto">
+      <h2>🎰 积分抽奖：抽不抽？</h2>
+      <div class="lotto-grid">
+        <div class="lotto-cell"><b>130.4 分</b><small>当前可用 · 已过期 1172 分</small></div>
+        <div class="lotto-cell"><b>24 分/次</b><small>≈ ¥1.3 · 最多可抽 5 次</small></div>
+        <div class="lotto-cell"><b>期望偏正</b><small>大奖 5 折三件套 ≈ 省 ¥16.75</small></div>
+      </div>
+      <div class="prize-tags">
+        <span class="ptag win">大奖 5 折三件套券 · 省 ¥16.75</span>
+        <span class="ptag win">6 折鳕鱼三件套 · 省 ¥15</span>
+        <span class="ptag win">麦旋风 5 折 · 省 ¥8</span>
+        <span class="ptag win">立减 3 元</span>
+        <span class="ptag lose">立减 1 元 · 小亏</span>
+        <span class="ptag win">30 积分 · 净赚 6 分</span>
+      </div>
+      <div class="verdict">
+        <b>建议：先抽 2 次</b>（花 48 分，留 82 分），看出奖规律再决定。积分留在账上就是净损失——你已经过期掉了 <b>1172 分</b>。抽奖不可逆，回一句「抽 2 次」或「抽 5 次」即执行。
+      </div>
+    </div>
+  </section>
+
+  <!-- 未来一周 -->
+  <section>
+    <div class="sec-head">
+      <span class="num">4</span><h2>未来一周活动排期</h2>
+      <span class="tag">顺手当公众号选题日历</span>
+    </div>
+    <div class="timeline tl-cols">
+      <div class="tl-item"><div class="date">10/22 周四</div><div class="what">限定主题丝巾 <small>· 第三周周边开售</small></div></div>
+      <div class="tl-item"><div class="date">10/23 周五</div><div class="what">学生麦金学期卡 <small>· 两张券同日到期！</small></div></div>
+      <div class="tl-item"><div class="date">10/24 周六</div><div class="what">韩式风味蘸酱上新</div></div>
+      <div class="tl-item"><div class="date">10/25 周日</div><div class="what">G-DRAGON 联动</div></div>
+      <div class="tl-item"><div class="date">10/28 周三</div><div class="what">龙焰鸡腿堡四件套</div></div>
+      <div class="tl-item"><div class="date">10/29 周四</div><div class="what">早餐厚松饼堡</div></div>
+      <div class="tl-item"><div class="date">10/30 周五</div><div class="what">麦咖啡浓浓黑巧</div></div>
+      <div class="tl-item"><div class="date">11/1 周日</div><div class="what">灰焰圆筒</div></div>
+      <div class="tl-item"><div class="date">11/2 周一</div><div class="what">麦咖啡元气早餐</div></div>
+      <div class="tl-item"><div class="date">11/3 周二</div><div class="what">蓝莓爆爆珠麦旋风</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="src">🛰️ 数据源：麦当劳中国官方 MCP（mcp.mcd.cn）· 口碑来自公开测评 · 生成于 2026-10-21 17:20</span>
+  </footer>
+</div>
+</body>
+</html>

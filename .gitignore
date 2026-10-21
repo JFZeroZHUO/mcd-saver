@@ -1,0 +1,5 @@
+state/
+*.json
+!package.json
+__pycache__/
+.DS_Store
