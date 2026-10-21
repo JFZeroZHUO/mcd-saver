@@ -5,6 +5,10 @@
 
 **参赛项目 · 麦当劳程序员节创意开发大赛（mcd-developer-innovation-challenge）**
 
+![麦麦日报 · 可视化效果](images/report-demo.png)
+
+*雷达日报的可视化输出示例（浏览器打开 `examples/daily-report-demo.html` 可看交互原版）*
+
 ---
 
 ## 这是什么
@@ -126,6 +130,8 @@ mcd-saver/
 │   └── mcd.py                # 核心引擎：自带 MCP 客户端，纯标准库
 ├── references/
 │   └── api-facts.md          # 35 个工具实测字段结构、错误码、踩坑记录
+├── images/
+│   └── report-demo.png       # 可视化日报截图
 └── examples/
     └── daily-report-demo.html # 可视化日报效果演示
 ```
